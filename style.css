@@ -87,7 +87,6 @@ h1 {
     background-color: rgb(227, 66, 66);
 }
 
-.cell.available {
-  outline-offset: -3px;
-  filter: brightness(0.8) contrast(1.1);
+.cell.available {  
+  filter:hue-rotate(50deg);
 }

@@ -48,8 +48,8 @@ function generateBoard() {
 }
 
 function onCellClick(row, col, e) {
-  clearHighlights()
   if (!boardState[row][col] && !selectedCell) return;
+  clearHighlights()
   
   const cell = e.currentTarget;
   if (selectedCell) {
@@ -63,7 +63,7 @@ function onCellClick(row, col, e) {
     cell.classList.add('selected');
     let options = calc_moves(boardState, boardState[row][col], row, col)
     options.moves.forEach(move => {
-      const optionCell = document.getElementById(`cell-${move.row}-${move.col}`);
+      const optionCell = document.getElementById(`cell-${move[0]}-${move[1]}`);
       optionCell.classList.add('available');
     });
   }

@@ -45,20 +45,37 @@ export function calc_moves(board, piece, row, col) {
  * @returns {JSON} - An object containing an array of position you can move to with and without taking a piece
  */
 function calc_king(board, row, col, color) {
-    let moves = [] // List of possible moves without taking a piece
-    let takes = [] // List of possible moves taking a piece
+  let moves = [] // List of possible moves without taking a piece
+  let takes = [] // List of possible moves taking a piece
+  
+  if (row + 1 < 8) {        
+    if (!board[row+1][col]) moves.push([row + 1, col])
+  }
+  if (row - 1 >= 0) {
+    if (!board[row-1][col]) moves.push([row - 1, col])
+  }
+  if (col + 1 < 8) {
+    if (!board[row][col+1]) moves.push([row, col + 1])
+  }
+  if (col - 1 >= 0) {
+    if (!board[row][col-1]) moves.push([row, col - 1])
+  }
+  
+    
+  if (row + 1 < 8 && col + 1 < 8) {
+    if (!board[row+1][col+1]) moves.push([row + 1, col + 1])
+  }
+  if (row + 1 < 8 && col - 1 >= 0) {
+    if (!board[row+1][col-1]) moves.push([row + 1, col - 1])
+  }
+  if (row - 1 >= 0 && col + 1 < 8) {
+    if (!board[row-1][col+1]) moves.push([row - 1, col + 1])
+  }
+  if (row - 1 >= 0 && col - 1 >= 0) {
+    if (!board[row-1][col-1]) moves.push([row - 1, col - 1])
+  }
 
-    if (!board[row+1][col]) moves.push({"row": row + 1, "col": col})
-    if (!board[row-1][col]) moves.push({"row": row - 1, "col": col})
-    if (!board[row][col+1]) moves.push({"row": row, "col": col + 1})
-    if (!board[row][col-1]) moves.push({"row": row, "col": col - 1})
-
-    if (!board[row+1][col+1]) moves.push({"row": row + 1, "col": col + 1})
-    if (!board[row+1][col-1]) moves.push({"row": row + 1, "col": col - 1})
-    if (!board[row-1][col+1]) moves.push({"row": row - 1, "col": col + 1})
-    if (!board[row-1][col-1]) moves.push({"row": row - 1, "col": col - 1})
-
-    return {"moves": moves, "takes": takes}
+  return {"moves": moves, "takes": takes}
 }
 
 /**
@@ -71,7 +88,38 @@ function calc_king(board, row, col, color) {
  * @returns {JSON} - An object containing an array of position you can move to with and without taking a piece
  */
 function calc_queen(board, row, col, color) {
-    
+  let moves = [] // List of possible moves without taking a piece
+  let takes = [] // List of possible moves taking a piece
+
+  for (let i = 1; i < 8; i++) {
+    if (row + i < 8) {
+      if (!board[row+i][col]) moves.push([row + i, col])
+    }
+    if (row - i >= 0) {
+      if (!board[row-i][col]) moves.push([row - i, col])
+    }
+    if (col + i < 8) {
+      if (!board[row][col+i]) moves.push([row, col + i])
+    }
+    if (col - i >= 0) {
+      if (!board[row][col-i]) moves.push([row, col - i])
+    }
+
+    if (row + i < 8 && col + i < 8) {
+      if (!board[row+i][col+i]) moves.push([row + i, col + i])
+    }
+    if (row + i < 8 && col - i >= 0) {
+      if (!board[row+i][col-i]) moves.push([row + i, col - i])
+    }
+    if (row - i >= 0 && col + i < 8) {
+      if (!board[row-i][col+i]) moves.push([row-i, col + i])
+    }
+    if (row - i >= 0 && col - i >= 0) {
+      if (!board[row-i][col-i]) moves.push([row - i, col - i])
+    }
+  }
+
+  return {"moves": moves, "takes": takes}
 }
 
 /**
@@ -84,7 +132,25 @@ function calc_queen(board, row, col, color) {
  * @returns {JSON} - An object containing an array of position you can move to with and without taking a piece
  */
 function calc_bishop(board, row, col, color) {
-    
+  let moves = [] // List of possible moves without taking a piece
+  let takes = [] // List of possible moves taking a piece
+
+  for (let i = 1; i < 8; i++) {
+    if (row + i < 8 && col + i < 8) {
+      if (!board[row+i][col+i]) moves.push([row + i, col + i])
+    }
+    if (row + i < 8 && col - i >= 0) {
+      if (!board[row+i][col-i]) moves.push([row + i, col - i])
+    }
+    if (row - i >= 0 && col + i < 8) {
+      if (!board[row-i][col+i]) moves.push([row-i, col + i])
+    }
+    if (row - i >= 0 && col - i >= 0) {
+      if (!board[row-i][col-i]) moves.push([row - i, col - i])
+    }
+  }
+
+  return {"moves": moves, "takes": takes}
 }
 
 /**
@@ -97,7 +163,30 @@ function calc_bishop(board, row, col, color) {
  * @returns {JSON} - An object containing an array of position you can move to with and without taking a piece
  */
 function calc_knight(board, row, col, color) {
-    
+  let moves = [] // List of possible moves without taking a piece
+  let takes = [] // List of possible moves taking a piece
+
+  if (row + 2 < 8) {
+    if (col + 1 < 8 && !board[row+2][col+1]) moves.push([row+2, col+1])
+    if (col - 1 >= 0 && !board[row+2][col-1]) moves.push([row+2, col-1])
+  }
+
+  if (row - 2 >= 0) {
+    if (col + 1 < 8 && !board[row-2][col+1]) moves.push([row-2, col+1])
+    if (col - 1 >= 0 && !board[row-2][col-1]) moves.push([row-2, col-1])
+  }
+
+  if (col + 2 < 8) {
+    if (row + 1 < 8 && !board[row+1][col+2]) moves.push([row+1, col+2])
+    if (row - 1 >= 0 && !board[row-1][col+2]) moves.push([row-1, col+2])
+  }
+
+  if (col - 2 >= 0) {
+    if (row + 1 < 8 && !board[row+1][col-2]) moves.push([row+1, col-2])
+    if (row - 1 >= 0 && !board[row-1][col-2]) moves.push([row-1, col-2])
+  }
+
+  return {"moves": moves, "takes": takes}
 }
 
 /**
@@ -110,7 +199,25 @@ function calc_knight(board, row, col, color) {
  * @returns {JSON} - An object containing an array of position you can move to with and without taking a piece
  */
 function calc_rook(board, row, col, color) {
-    
+  let moves = [] // List of possible moves without taking a piece
+  let takes = [] // List of possible moves taking a piece
+
+  for (let i = 1; i < 8; i++) {
+    if (row + i < 8) {
+      if (!board[row+i][col]) moves.push([row + i, col])
+    }
+    if (row - i >= 0) {
+      if (!board[row-i][col]) moves.push([row - i, col])
+    }
+    if (col + i < 8) {
+      if (!board[row][col+i]) moves.push([row, col + i])
+    }
+    if (col - i >= 0) {
+      if (!board[row][col-i]) moves.push([row, col - i])
+    }
+  }
+
+  return {"moves": moves, "takes": takes}
 }
 
 /**
@@ -123,6 +230,17 @@ function calc_rook(board, row, col, color) {
  * @returns {JSON} - An object containing an array of position you can move to with and without taking a piece
  */
 function calc_pawn(board, row, col, color) {
-    
+  let moves = [] // List of possible moves without taking a piece
+  let takes = [] // List of possible moves taking a piece
+
+  if (color && row - 1 >= 0) {
+    if (!board[row-1][col]) moves.push([row-1, col])
+    if (row == 6 && !board[row-2][col]) moves.push([row-2, col])
+  } else if (row + 1 < 8) {
+    if (!board[row+1][col]) moves.push([row+1, col])
+    if (row == 1 && !board[row+2][col]) moves.push([row+2, col])
+  }
+
+  return {"moves": moves, "takes": takes}
 }
 
