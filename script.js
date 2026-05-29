@@ -1,3 +1,5 @@
+import { calc_moves } from './src/moves.js';
+
 const pieces = ["K", "Q", "R", "B", "N", "P", "k", "q", "r", "b", "n", "p"]
 const boardState = [
     ["R", "N", "B", "Q", "K", "B", "N", "R"],
@@ -9,6 +11,7 @@ const boardState = [
     ["p", "p", "p", "p", "p", "p", "p", "p"],
     ["r", "n", "b", "q", "k", "b", "n", "r"]
 ]
+
 let selectedCell = null
 
 function generateBoard() {
@@ -45,19 +48,26 @@ function generateBoard() {
 }
 
 function onCellClick(row, col, e) {
-    const cell = e.currentTarget;
-    if (selectedCell) {
-        boardState[row][col] = boardState[selectedCell.coords[0]][selectedCell.coords[1]];
-        boardState[selectedCell.coords[0]][selectedCell.coords[1]] = ""
-        selectedCell.cell.classList.remove('selected');
-        selectedCell = null;
-        
-    } else {
-        selectedCell = {"cell": cell, "coords": [row, col]};
-        cell.classList.add('selected');
-    }
-    
-    renderBoard()
+  clearHighlights()
+  if (!boardState[row][col] && !selectedCell) return;
+  
+  const cell = e.currentTarget;
+  if (selectedCell) {
+    if (selectedCell.coords[0] == row && selectedCell.coords[1] == col ) return
+    boardState[row][col] = boardState[selectedCell.coords[0]][selectedCell.coords[1]];
+    boardState[selectedCell.coords[0]][selectedCell.coords[1]] = ""
+    selectedCell.cell.classList.remove('selected');
+    selectedCell = null;
+  } else {
+    selectedCell = {"cell": cell, "coords": [row, col]};
+    cell.classList.add('selected');
+    let options = calc_moves(boardState, boardState[row][col], row, col)
+    options.moves.forEach(move => {
+      const optionCell = document.getElementById(`cell-${move.row}-${move.col}`);
+      optionCell.classList.add('available');
+    });
+  }
+  renderBoard()
 }
 
 /**
@@ -73,7 +83,7 @@ function renderBoard() {
 
       if (boardState[row][col]) {
         const img = document.createElement('img');
-        img.src = `./src/${boardState[row][col]}.svg`;
+        img.src = `./img/${boardState[row][col]}.svg`;
         img.alt = boardState[row][col];
         img.classList.add('piece');
         cell.appendChild(img);
@@ -99,6 +109,10 @@ function check_position(row, col) {
     }
 
     return true
+}
+
+function clearHighlights() {
+  document.querySelectorAll('.cell.available').forEach(c => c.classList.remove('available'));
 }
 
 generateBoard();
