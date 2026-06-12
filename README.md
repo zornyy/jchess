@@ -1,5 +1,8 @@
 # ♟️ jchess
 
+> ***Disclaimer :***
+> This README.md has been redacted with AI. This is not the case for the code as my goal was to work with as little assistance from AI models as possible
+
 `jchess` is a lightweight and versatile JavaScript chess interface/framework.
 
 The goal is to provide:
