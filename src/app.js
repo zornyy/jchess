@@ -1,17 +1,7 @@
-import { calc_moves } from './src/moves.js';
+import { empty_board, kings_board, start_board } from './core/board.js';
+import { calc_moves } from './core/moves.js';
 
-const pieces = ["K", "Q", "R", "B", "N", "P", "k", "q", "r", "b", "n", "p"]
-const boardState = [
-    ["R", "N", "B", "Q", "K", "B", "N", "R"],
-    ["P", "P", "P", "P", "P", "P", "P", "P"],
-    ["", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", ""],
-    ["p", "p", "p", "p", "p", "p", "p", "p"],
-    ["r", "n", "b", "q", "k", "b", "n", "r"]
-]
-
+const boardState = start_board
 let selectedCell = null
 
 function generateBoard() {
