@@ -17,12 +17,12 @@ export function calc_moves(board, piece, row, col) {
       n: calc_knight,
       r: calc_rook,
       p: calc_pawn,
-      K: calc_king,
-      Q: calc_queen,
-      B: calc_bishop,
-      N: calc_knight,
-      R: calc_rook,
-      P: calc_pawn
+      kb: calc_king,
+      qb: calc_queen,
+      bb: calc_bishop,
+      nb: calc_knight,
+      rb: calc_rook,
+      pb: calc_pawn
     };
   
     const calculator = pieceCalculators[piece];
